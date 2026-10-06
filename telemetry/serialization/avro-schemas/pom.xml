@@ -38,7 +38,7 @@
                         <id>schemas</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>idl-protocol</goal>
+                            <goal>schema</goal>
                         </goals>
                         <configuration>
                             <sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory>

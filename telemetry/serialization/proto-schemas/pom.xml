@@ -42,9 +42,12 @@
             <plugin>
                 <groupId>io.github.ascopes</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
+                <version>3.9.0</version>   <!-- было 2.4.0 -->
 
                 <configuration>
                     <protocVersion>${protobuf.version}</protocVersion>
+
+                    <sanctionedExecutablePath>D:\protoc-plugins</sanctionedExecutablePath>
 
                     <binaryMavenPlugins>
                         <binaryMavenPlugin>
@@ -80,6 +83,36 @@
                                 <source>${project.build.directory}/generated-sources/protobuf</source>
                             </sources>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>io.github.ascopes</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+
+                <configuration>
+                    <protocVersion>${protobuf.version}</protocVersion>
+                    <sourceDirectories>
+                        <sourceDirectory>${project.basedir}/src/main/protobuf</sourceDirectory>
+                    </sourceDirectories>
+                    <importPaths>
+                        <importPath>${project.basedir}/src/main/protobuf</importPath>
+                    </importPaths>
+
+                    <binaryMavenPlugins>
+                        <binaryMavenPlugin>
+                            <groupId>io.grpc</groupId>
+                            <artifactId>protoc-gen-grpc-java</artifactId>
+                            <version>${grpc.version}</version>
+                        </binaryMavenPlugin>
+                    </binaryMavenPlugins>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

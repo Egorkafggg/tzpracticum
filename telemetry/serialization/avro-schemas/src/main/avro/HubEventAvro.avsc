@@ -1,0 +1,102 @@
+ {
+   "type": "record",
+   "name": "HubEventAvro",
+   "namespace": "ru.yandex.practicum.kafka.telemetry.event",
+   "fields": [
+     { "name": "hub_id", "type": "string" },
+     { "name": "timestamp", "type": { "type": "long", "logicalType": "timestamp-millis" } },
+     {
+       "name": "payload",
+       "type": [
+         {
+           "type": "record",
+           "name": "DeviceAddedEventAvro",
+           "fields": [
+             { "name": "id", "type": "string" },
+             {
+               "name": "type",
+               "type": {
+                 "type": "enum",
+                 "name": "DeviceTypeAvro",
+                 "symbols": ["MOTION_SENSOR", "TEMPERATURE_SENSOR", "LIGHT_SENSOR", "CLIMATE_SENSOR", "SWITCH_SENSOR"]
+               }
+             }
+           ]
+         },
+         {
+           "type": "record",
+           "name": "DeviceRemovedEventAvro",
+           "fields": [
+             { "name": "id", "type": "string" }
+           ]
+         },
+         {
+           "type": "record",
+           "name": "ScenarioAddedEventAvro",
+           "fields": [
+             { "name": "name", "type": "string" },
+             {
+               "name": "conditions",
+               "type": {
+                 "type": "array",
+                 "items": {
+                   "type": "record",
+                   "name": "ScenarioConditionAvro",
+                   "fields": [
+                     { "name": "sensor_id", "type": "string" },
+                     {
+                       "name": "type",
+                       "type": {
+                         "type": "enum",
+                         "name": "ConditionTypeAvro",
+                         "symbols": ["MOTION", "LUMINOSITY", "SWITCH", "TEMPERATURE", "CO2LEVEL", "HUMIDITY"]
+                       }
+                     },
+                     {
+                       "name": "operation",
+                       "type": {
+                         "type": "enum",
+                         "name": "ConditionOperationAvro",
+                         "symbols": ["EQUALS", "GREATER_THAN", "LOWER_THAN"]
+                       }
+                     },
+                     { "name": "value", "type": ["null", "int", "boolean"], "default": null }
+                   ]
+                 }
+               }
+             },
+             {
+               "name": "actions",
+               "type": {
+                 "type": "array",
+                 "items": {
+                   "type": "record",
+                   "name": "DeviceActionAvro",
+                   "fields": [
+                     { "name": "sensor_id", "type": "string" },
+                     {
+                       "name": "type",
+                       "type": {
+                         "type": "enum",
+                         "name": "ActionTypeAvro",
+                         "symbols": ["ACTIVATE", "DEACTIVATE", "INVERSE", "SET_VALUE"]
+                       }
+                     },
+                     { "name": "value", "type": ["null", "int"], "default": null }
+                   ]
+                 }
+               }
+             }
+           ]
+         },
+         {
+           "type": "record",
+           "name": "ScenarioRemovedEventAvro",
+           "fields": [
+             { "name": "name", "type": "string" }
+           ]
+         }
+       ]
+     }
+   ]
+ }
